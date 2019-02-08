@@ -4,7 +4,8 @@ This sorting algorithm is comparison-based algorithm in which each pair of adjac
 
 
 Outputs-----------
- before sorting
-[20 35 -15 -16 7 55 1 -22 100 30 509 60 300 2394]
- after sorting
-[-22 -16 -15 1 7 20 30 35 55 60 100 300 509 2394]
+
+ before sorting  [20 35 -15 -16 7 55 1 -22 100 30 509 60 300 2394]
+ 
+ 
+ after sorting [-22 -16 -15 1 7 20 30 35 55 60 100 300 509 2394]
