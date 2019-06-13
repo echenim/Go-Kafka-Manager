@@ -1,31 +1,23 @@
 package main
 
-import "fmt"
+import (
+	"fmt"
+	"log"
+	"os"
+
+	"github.com/Shopify/sarama"
+	consumer "github.com/echenim/kafkamanager/src/manager"
+)
 
 func main() {
 
-	dataToBeSorted := []int{20, 35, -15, -15, 7, 55, 1, -22}
-	fmt.Println(dataToBeSorted)
-
-	for lastUnSortedIndex := len(dataToBeSorted) - 1; lastUnSortedIndex > 0; lastUnSortedIndex-- {
-		for i := 0; i < lastUnSortedIndex; i++ {
-			if dataToBeSorted[i] > dataToBeSorted[i+1] {
-				swap(dataToBeSorted, i, i+1)
-			}
-		}
+	//initialize log for sarama
+	sarama.Logger = log.New(os.Stdout, "", log.Ltime)
+	cg, slipup := consumer.InitConsumer()
+	if slipup != nil {
+		fmt.Println("error occured in consumer group: ", slipup.Error())
+		os.Exit(1)
 	}
-	fmt.Println(dataToBeSorted)
-
-}
-
-//swap function to swap the array values if greater than next
-func swap(sortData []int, num int, numk int) {
-
-	if num == numk {
-		return
-	}
-	temp := sortData[num]
-	sortData[num] = sortData[numk]
-	sortData[numk] = temp
-
+	defer cg.Close()
+	consumer.Consume(cg)
 }
